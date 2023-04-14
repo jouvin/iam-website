@@ -15,7 +15,8 @@ IAM implements the following endpoints:
 * ```/iam/account/{id}/labels```, providing access to user account labels
 * ```/iam/account/{id}/endTime```, managing user membership end time
 * ```/iam/account/me/proxycert```, managing user proxy certificate
-* ```/iam/account/search```, listing user accounts.
+* ```/iam/account/search```, listing user accounts
+* ```/iam/group/search```, listing all groups
 
 Authentication is required in all the endpoints and the access is based on IAM roles.
 Remember that there are three roles in Indigo IAM: Amdin, User, Group Manager.
