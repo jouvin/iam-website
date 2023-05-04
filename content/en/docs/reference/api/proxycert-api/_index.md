@@ -7,7 +7,7 @@ weight: 1
 IAM provides a RESTful API that can be used to download the X.509 proxy certificate previously uploaded in IAM dashboard by the user. \
 This is a plain proxy obtained by running `voms-proxy-init` command.
 
-The API has been added mainly for the integration of IAM with the [RCAuth.eu][RCauth] online certificate authority.
+The API has been added mainly for the integration of IAM with the [RCAuth.eu][RCauth] online certificate authority or to upload certificate users can use [IAM Account Proxy Certificate API](/docs/reference/api/account-api/#proxy-certificate).
 
 The `proxy:generate` OAuth scope is required to access this API. \
 Note that this scope is restricted in the default IAM configuration,
@@ -26,7 +26,8 @@ curl -s -X POST -H "Authorization: Bearer ${BT}" \
 ```
 
 The user can request a specific lifetime of the proxy 
-that is less than or equal to the maximum lifetime of the proxy itself.
+that is less than or equal to the maximum lifetime of the proxy itself
+and also limited by IAM configuration options `max-lifetime-seconds`.
 
 IAM response:
 
