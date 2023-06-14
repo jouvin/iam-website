@@ -256,5 +256,3 @@ DELETE http://example.com:8080/iam/api/refresh-tokens/1083
 ```
 204  RefreshToken revoked
 ```
-
-More details can be read at the [complete API Reference](tokens_api/index.html).
