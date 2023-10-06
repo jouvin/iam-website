@@ -101,12 +101,14 @@ This profile is assigned to clients using the `wlcg` scope.
 
 With this profile:
 
-- groups are encoded in the `wlcg-groups` claim; all the non-optional groups the user is member
-  of are included in the wlcg-groups claim;
+- groups are encoded in the `wlcg.groups` claim; all the non-optional groups the user is member
+  of are included in the wlcg.groups claim;
 
-- authentication information (username, email, groups) is not by default
+- authentication information (name, preferred username and email) is not by default
   included in access tokens; this behaviour can be changed by setting the
-  `IAM_ACCESS_TOKEN_INCLUDE_AUTHN_INFO=true` environment variable;
+  `IAM_ACCESS_TOKEN_INCLUDE_AUTHN_INFO=true` environment variable and by requesting
+  * `email` scope to include the `email` claim in access tokens
+  * `profile` scope to include the `name` and `preferred_username` claims in access tokens
 
 - the `nbf` (not before) claim is not set in access tokens; this behaviour
   can be changed by setting the `IAM_ACCESS_TOKEN_INCLUDE_NBF=true`
