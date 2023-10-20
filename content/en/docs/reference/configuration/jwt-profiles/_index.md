@@ -28,6 +28,7 @@ IAM currently supports three JWT profiles:
 - the `iam` profile
 - the `wlcg` WLCG profile 
 - the `aarc` profile
+- the `kc` profile
 
 
 ## Setting the default profile
@@ -49,7 +50,8 @@ in the list of scopes authorized for a client:
 
 - `iam`, for the IAM profile
 - `wlcg`, for the WLCG profile 
-- `aarc` profile, for the AARC profile
+- `aarc`, for the AARC profile
+- `kc`, for the Keycloak profile
 
 Clients should only link to one profile. When multiple profiles are linked to a
 client, IAM falls back to the default profile configured for the IAM instance.
@@ -84,9 +86,9 @@ With this profile:
 
 - the `nbf` (not before) claim is not set in access tokens; this behaviour
   can be changed by setting the `IAM_ACCESS_TOKEN_INCLUDE_NBF=true`
-  environment variable;
+  environment variable.
 
-This profile is assigned to clients using the `iam`  scope.
+This profile is assigned to clients using the `iam` scope.
 
 ### The WLCG profile
 
@@ -95,7 +97,7 @@ This profile implements the [Common JWT Token profile][wlcg-profile].
 In particular:
 
 - the `scope` claim is always included in access tokens;
-- groups are not included by default in access and ID tokens; 
+- groups are not included by default in access and ID tokens.
 
 This profile is assigned to clients using the `wlcg` scope.
 
@@ -107,12 +109,12 @@ With this profile:
 - authentication information (name, preferred username and email) is not by default
   included in access tokens; this behaviour can be changed by setting the
   `IAM_ACCESS_TOKEN_INCLUDE_AUTHN_INFO=true` environment variable and by requesting
-  * `email` scope to include the `email` claim in access tokens
-  * `profile` scope to include the `name` and `preferred_username` claims in access tokens
+  * `email` scope to include the `email` claim in access tokens;
+  * `profile` scope to include the `name` and `preferred_username` claims in access tokens;
 
 - the `nbf` (not before) claim is not set in access tokens; this behaviour
   can be changed by setting the `IAM_ACCESS_TOKEN_INCLUDE_NBF=true`
-  environment variable;
+  environment variable.
 
 
 #### Requesting groups with the WLCG profile
@@ -141,7 +143,7 @@ In particular:
 
 - groups and organisation name are not included by default in access and ID tokens;
 - organisation name can be requested using the `eduperson_scoped_affiliation` scope and it's encoded in the `eduperson_scoped_affiliation` claim;
-- groups can be requested using the `eduperson_entitlement` scope and they're encoded as URN in the `eduperson_entitlement` claim;
+- groups can be requested using the `eduperson_entitlement` scope and they're encoded as URN in the `eduperson_entitlement` claim.
 
 All the mapping rules are described in the [White Paper for implementation mappings between SAML 2.0 and OpenID Connect in Research and Education](https://docs.google.com/document/d/1b-Mlet3Lq7qKLEf1BnHJ4nL1fq-vMe7fzpXyrq2wp08/edit).
 
@@ -150,3 +152,16 @@ This profile is assigned to clients using the `aarc` scope.
 [system-scopes]: {{< ref "docs/reference/configuration/system-scopes" >}}
 [wlcg-profile]: https://zenodo.org/record/3460258
 [aarc-g002]: https://aarc-project.eu/guidelines/aarc-g002/
+
+### The Keycloak profile
+
+This profile allows the integration with a Keycloak environment.
+
+With this profile:
+
+* the `scope` claim is always included in access tokens;
+* groups are always included in access and ID tokens; they are encoded in the `roles` claim.
+
+Having **roles** claim instead of **groups** allows integration with the OIDC client - a conteinerised MISP deployment - which requires them to map IAM users.
+
+This profile is assigned to clients using the `kc` scope.
