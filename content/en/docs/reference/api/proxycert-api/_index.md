@@ -25,7 +25,7 @@ curl -s -X POST -H "Authorization: Bearer ${BT}" \
   http://localhost:8080/iam/proxycert
 ```
 
-The user can request a specific lifetime of the proxy 
+The user can request a specific lifetime of the proxy
 that is less than or equal to the maximum lifetime of the proxy itself
 and also limited by IAM configuration options `max-ac-lifetime-in-seconds`
 (as shown in [VOMS AA configuration](../../../../docs/tasks/deployment/voms/#voms-aa-configuration)).
@@ -40,6 +40,19 @@ IAM response:
   "not_after": "1663991299000",
   "certificate_chain": "-----BEGIN CERTIFICATE-----\nMI...lCU=\n-----END CERTIFICATE-----\n"
 }
+```
+
+N.B. The first proxy certificate found is downloaded.
+
+If one account has two or more associated proxy certificates, the issuerDn (e.g. `CN=Test CA,O=IGI,C=IT`) should be specified in the request to download a specific one:
+
+```bash
+curl -s -X POST -H "Authorization: Bearer ${BT}" \
+  -d client_id=${CLIENT_ID} \
+  -d client_secret=${CLIENT_SECRET} \
+  -d lifetimeSecs=${PROXY_CERT_LIFETIME_SECS} \
+  -d issuerDn=${ISSUER_DN} \
+  http://localhost:8080/iam/proxycert
 ```
 
 [RCauth]: http://rcauth.eu/
