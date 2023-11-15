@@ -44,7 +44,7 @@ contact, rediret_uris, etc...). We will use the `client-req.json` file name for
 this example. You can then use [httpie][httpie] as  follows to generate the
 client on the IAM
 
-```
+```text
 http https://iam.local.io/iam/api/client-registration < client-req.json > client.json
 ```
 
@@ -52,7 +52,7 @@ If the command terminates correctly, you will have the client configuration
 saved in the `client.json` file. You can use [jq][jq] to display in a pretty
 way its contents:
 
-```
+```json
 $ jq . client.json
 {
   "client_id": "9bef3e68-f329-4dbf-9c3e-45647c08dfd5",
@@ -87,14 +87,14 @@ and also to extract information from it conveniently from the command line.
 For example, you can extract the `client_id` and `registration_access_token`
 with the following commands:
 
-```
-$ export CID=$(jq -r .client_id client.json)
-$ export RAT=$(jq -r .registration_access_token client.json)
+```bash
+export CID=$(jq -r .client_id client.json)
+export RAT=$(jq -r .registration_access_token client.json)
 ```
 
 and use them to delete the client:
 
-```
+```text
 $ http DELETE https://iam.local.io/iam/api/client-registration/${CID} Authorization:"Bearer ${RAT}"
 HTTP/1.1 204 No Content
 Access-Control-Allow-Origin: *
@@ -110,6 +110,108 @@ X-Application-Context: INDIGO IAM:mysql,google,registration,saml,mysql-test:8080
 X-Content-Type-Options: nosniff
 X-Frame-Options: DENY
 X-XSS-Protection: 1; mode=block
+```
+
+or get client information:
+
+```text
+http GET https://iam.local.io/iam/api/client-registration/${CID} Authorization:"Bearer ${RAT}"
+HTTP/1.1 200
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Type: application/json
+Date: Fri, 03 Nov 2023 16:54:53 GMT
+Expires: 0
+Pragma: no-cache
+Server: nginx/1.13.12
+Strict-Transport-Security: max-age=15724800; includeSubDomains
+Transfer-Encoding: chunked
+Vary: Accept-Encoding
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+
+{
+    "clear_access_tokens_on_refresh": true,
+    "client_id": "9bef3e68-f329-4dbf-9c3e-45647c08dfd5",
+    "client_name": "another-example-client",
+    "client_secret": "ALMjVauX1tXtU2lZytbxfW7JrEx6-ZhZml8bZcEocYOf1enNdIQaWB0aDUmr-nilGjjrznzbWNNWdh8bP0neyUI",
+    "contacts": [
+        "test@iam.test"
+    ],
+    "created_at": 1699030393000,
+    "dynamically_registered": true,
+    "grant_types": [
+        "authorization_code",
+        "refresh_token"
+    ],
+    "redirect_uris": [
+        "https://another.client.example/oidc"
+    ],
+    "registration_client_uri": "https://iam.local.io/iam/api/client-registration/9bef3e68-f329-4dbf-9c3e-45647c08dfd5",
+    "require_auth_time": false,
+    "response_types": [
+        "code"
+    ],
+    "reuse_refresh_token": true,
+    "scope": "address phone openid profile offline_access email",
+    "token_endpoint_auth_method": "client_secret_basic"
+}
+```
+
+or update the client, e.g. client name:
+
+```text
+http PUT https://iam.local.io/iam/api/client-registration/${CID} Authorization:"Bearer ${RAT}" @update-client.json
+HTTP/1.1 200
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Type: application/json
+Date: Fri, 03 Nov 2023 16:56:15 GMT
+Expires: 0
+Pragma: no-cache
+Server: nginx/1.13.12
+Strict-Transport-Security: max-age=15724800; includeSubDomains
+Transfer-Encoding: chunked
+Vary: Accept-Encoding
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+
+{
+    "clear_access_tokens_on_refresh": true,
+    "client_id": "9bef3e68-f329-4dbf-9c3e-45647c08dfd5",
+    "client_name": "another-client",
+    "client_secret": "ALMjVauX1tXtU2lZytbxfW7JrEx6-ZhZml8bZcEocYOf1enNdIQaWB0aDUmr-nilGjjrznzbWNNWdh8bP0neyUI",
+    "contacts": [
+        "test@iam.test"
+    ],
+    "created_at": 1699030393000,
+    "dynamically_registered": true,
+    "grant_types": [
+        "refresh_token",
+        "authorization_code"
+    ],
+    "redirect_uris": [
+        "https://another.client.example/oidc"
+    ],
+    "registration_client_uri": "https://iam.local.io/iam/api/client-registration/9bef3e68-f329-4dbf-9c3e-45647c08dfd5",
+    "require_auth_time": false,
+    "response_types": [
+        "code"
+    ],
+    "reuse_refresh_token": true,
+    "scope": "address phone openid profile offline_access email",
+    "token_endpoint_auth_method": "client_secret_basic"
+}
 ```
 
 [oidc-dynclientreg]: https://openid.net/specs/openid-connect-registration-1_0.html
