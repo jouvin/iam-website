@@ -20,11 +20,11 @@ IAM_KEY_STORE_LOCATION=file:///secrets/jwk/keystore.jwks
 
 ### Default Key ID (kid)
 
-If there are multiple JWKs in the keystore, `IAM_JWK_DEFAULT_KEY` environment variable
+If there are multiple JWKs in the keystore, `IAM_JWK_DEFAULT_KEY_ID` environment variable
 can be set to choose the key that signs the tokens, e.g.:
 
 ```env
-IAM_JWK_DEFAULT_KEY=rsa2
+IAM_JWK_DEFAULT_KEY_ID=rsa2
 ```
 
 If this variable is not set it will use the default value `rsa1`.
@@ -83,7 +83,7 @@ update or because of a security instance, etc.). For example:
 ```
 
 - Firstly, new JWK should be added to the keystore using the file in the `IAM_KEY_STORE_LOCATION`.
-  The `IAM_JWK_DEFAULT_KEY` should still be left as the key id of the old key. This way all the
+  The `IAM_JWK_DEFAULT_KEY_ID` should still be left as the key id of the old key. This way all the
   clients can cache the new public key. Before the next step, waiting as long as the agreed policy for
   key caching for the infrastructure would be enough to make sure every client cached the new
   key.
@@ -121,15 +121,15 @@ update or because of a security instance, etc.). For example:
   }
   ```
 
-  In this example `IAM_JWK_DEFAULT_KEY=rsa1` is kept unchanged.
+  In this example `IAM_JWK_DEFAULT_KEY_ID=rsa1` is kept unchanged.
 
 - Secondly, after the new key is cached by all of the clients, the signing key should be changed as the
-  new key via the `IAM_JWK_DEFAULT_KEY` variable. The old key should still be kept in
+  new key via the `IAM_JWK_DEFAULT_KEY_ID` variable. The old key should still be kept in
   the keystore, otherwise all the current tokens would stop working. Before removing it from the
   key store, waiting as long the longest allowed token lifetime would be enough for the old tokens to expire
   and the clients will be left with only tokens that are signed with new key.
 
-  So in the example default key should be set as `IAM_JWK_DEFAULT_KEY=rsa2`.
+  So in the example default key should be set as `IAM_JWK_DEFAULT_KEY_ID=rsa2`.
 
 - As the last step, old key can be removed from the keystore. So only the tokens that were signed with the new
   key will be valid after this.
