@@ -16,13 +16,13 @@ Currently the following profiles are defined:
 
 | Profile name   | Active by default   | Description                                                                        |
 | -------------- | ------------------- | ---------------------------------------------------------------------------------- |
-| prod           | no                  | This is the profile you should enable when using IAM                               |
+| prod           | no                  | Sets up the environment for IAM in production                                      |
 | h2-test        | yes                 | Enables h2 in-memory database, useful for development and testing                  |
 | mysql-test     | no                  | Like h2-test, but used to develop against a MySQL database                         |
-| oidc           | no                  | Enables Google authentication                                                      |
+| oidc           | no                  | Enables OIDC authentication (e.g. Google)                                          |
 | saml           | no                  | Enables SAML authentication                                                        |
 | registration   | yes                 | Enables user registration and reset password functionalities                       |
-| wlcg-scopes    | no                  | This is the profile you should enable when you want to support WLCG token encoding |
+| wlcg-scopes    | no                  | Enables WLCG token encoding                                                        |
 
 Profiles are enabled by setting the `spring.profiles.active` Java system
 property when starting the IAM service. This can be done, using the official
