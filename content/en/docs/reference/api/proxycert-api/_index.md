@@ -28,7 +28,7 @@ curl -s -X POST -H "Authorization: Bearer ${BT}" \
 The user can request a specific lifetime of the proxy
 that is less than or equal to the maximum lifetime of the proxy itself
 and also limited by IAM configuration options `max-ac-lifetime-in-seconds`
-(as shown in [VOMS AA configuration](../../tasks/deployment/voms/#voms-aa-configuration)).
+(as shown in [VOMS AA configuration](../../../tasks/deployment/voms/#voms-aa-configuration)).
 
 IAM response:
 
