@@ -36,6 +36,12 @@ jobs:
           ref: main
           token: ${{ secrets.API_TOKEN_GITHUB }}
 
+      - name: Checkout source repo code
+        uses: actions/checkout@v2
+        with:
+          path: source
+          fetch-depth: 0         # Fetch all history for .GitInfo and .Lastmod
+
       - name: build & deploy website
         run: |
           ls -al && pwd
