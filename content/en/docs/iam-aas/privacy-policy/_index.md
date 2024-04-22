@@ -76,12 +76,12 @@ addressed your concerns in a satisfactory manner, use the following contact
 info:
 
 <pre>
-Davide Salomoni 
+Francesco Giacomini
 
 INFN-CNAF
 Viale Berti Pichat 6/2
 40127 Bologna  
 Italy
 
-davide.salomoni@cnaf.infn.it
+francesco.giacomini@cnaf.infn.it
 </pre>
