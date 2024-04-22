@@ -41,17 +41,6 @@ and with key Grid computing middleware services (e.g., [RUCIO][rucio],
 
 ## Service access options
 
-### IAM as a service 
-
-INFN provides IAM as a service to partner research communities. In this
-scenario, a dedicated IAM instance is deployed on the INFN infrastructure and
-configured according to the community needs. INFN takes care of keeping the
-service operational and up-to-date, while administrative control on the IAM
-instance is granted to the community. 
-
-For more information on how to access IAM as a service, click
-[here][iam-as-a-service].
-
 ### On-premise deployment 
 
 IAM is an Apache-licensed identity solution, for which we provide a Docker
@@ -60,7 +49,6 @@ image on dockerhub and RPM packages.
 IAM can be deployed on-premises following the advice in the [Deployment
 guide][deployment-guide].
 
-[iam-as-a-service]: {{< ref "/docs/iam-aas/" >}}
 [deployment-guide]: {{< ref "/docs/getting-started/" >}}
 [rucio]: https://rucio.cern.ch/
 [voms]: https://italiangrid.github.io/voms
