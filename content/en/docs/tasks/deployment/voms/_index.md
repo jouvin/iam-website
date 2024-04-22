@@ -18,23 +18,23 @@ The VOMS attribute authority can access the IAM database and encode IAM groups
 and other attributes in a standard VOMS attribute certificate. This means in
 practice that IAM can act both as an OAuth/OpenID Connect authorization server
 and as a VOMS server for a given organization. TLS termination and client VOMS
-atttribute certificate parsing and validation is delegated to [OpenResty
-VOMS][openresty-voms], which can de deployed as a sidecar service that just protects the
+atttribute certificate parsing and validation is delegated to an [NGINX VOMS module][openresty-voms],
+which can de deployed as a sidecar service that just protects the
 VOMS AA or also in front of the IAM backend application. The two scenarios are
 depicted above.
 
 In order to deploy a VOMS attribute authority, you can use the following docker
 images:
 
-- `indigoiam/openresty-voms`, for the OpenResty VOMS service
+- `cnafsd/nginx-httpg-voms`, for the NGINX VOMS module (which replaces [OpenResty VOMS](https://github.com/indigo-iam/openresty-voms))
 - `indigoiam/voms-aa:{{< param voms_aa_version >}}`, for the VOMS AA service
 
 Deployment from packages is not currently supported for the VOMS attribute
 authority.
 
-#### OpenResty VOMS configuration
+#### NGINX VOMS module configuration
 
-OpenResty VOMS requires:
+The NGINX VOMS module requires:
 
 - IGTF trust anchors properly configured; see the [EGI trust anchors
   container][egi-trustanchors] container
@@ -43,7 +43,7 @@ OpenResty VOMS requires:
 
 ##### VOMS LSC configuration
 
-Let's assume that the IAM VOMS AA will answer on `voms.local.io` for the VO
+Let's assume that the IAM VOMS AA will answer on `voms.test.example` for the VO
 `example.vo`, to generate the LSC you need to get the subject and issuer of the
 VOMS AA X.509 credential and put them in a file named as the fully qualified
 domain name of the VOMS attribute authority with the `.lsc` extension.
@@ -55,11 +55,11 @@ directory where you have writing privileges):
 > mkdir -p ${X509_VOMS_DIR}/example.vo
 > openssl x509 -in voms_local_io.cert.pem -noout -subject -issuer -nameopt compat | \
   gsed -e 's/^subject=//' -e 's/^issuer=//' > \
-  ${X509_VOMS_DIR}/example.vo/voms.local.io.lsc
+  ${X509_VOMS_DIR}/example.vo/voms.test.example.lsc
 ```
 
 For an example nginx configuration, see the [VOMS AA docker compose
-file][voms-aa-compose-openresty].
+configuration][voms-aa-compose-openresty].
 
 
 
@@ -147,10 +147,10 @@ voms:
 For an example configuration, see the [VOMS AA docker compose
 file][voms-aa-compose].
 
-[openresty-voms]: https://github.com/indigo-iam/openresty-voms
+[openresty-voms]: https://baltig.infn.it/cnafsd/ngx_http_voms_module
 [voms-aa]: https://github.com/indigo-iam/iam/tree/master/iam-voms-aa
-[voms-aa-compose-openresty]: https://github.com/indigo-iam/voms-aa/blob/master/compose/assets/openresty-voms/conf.d/voms.local.io.conf
+[voms-aa-compose-openresty]: https://github.com/indigo-iam/iam/blob/master/compose/voms-deploy/assets/nginx/conf.d/voms.test.example.conf
 [voms-aa-compose]:
-https://github.com/indigo-iam/voms-aa/blob/master/compose/docker-compose.yml
+https://github.com/indigo-iam/iam/blob/master/compose/voms-deploy/docker-compose.yml
 [voms]: http://italiangrid.github.io/voms/
 [egi-trustanchors]: https://github.com/indigo-iam/egi-trust-anchors-container/
