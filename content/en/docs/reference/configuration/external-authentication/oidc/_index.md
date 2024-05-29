@@ -119,6 +119,11 @@ provider.
 See the [configuration reference][conf-ref] for instructions on how to override
 the default IAM configuration.
 
+## Registration form: filling information from IdP
+
+See [registration configuration][external-idp-config]
+
+[external-idp-config]: {{< ref "/docs/reference/configuration/registration/#registration-with-external-idp" >}}
 [google-oidc]: https://developers.google.com/identity/protocols/OpenIDConnect
 [oidc-discovery-url]: https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig
 [conf-ref]: {{< ref "/docs/reference/configuration/#overriding-default-configuration-templates" >}}

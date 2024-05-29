@@ -9,15 +9,37 @@ IAM implements a basic registration service that implements an
 administrator-vetted registration flow, where users apply for membership in an
 organization and administrators are asked to validate membership requests.
 
-## Requiring external authentication
+## Registration with external IdP
 
-Starting with version 1.6.0, IAM allows to request that users are authenticated
-from a trusted identity provider (SAML or OIDC) in order to apply for
-membership. It's also possible to control how information in authentication
-tokens and assertions is mapped to IAM registration fields.
+When an external OIDC or SAML IdP is used to authenticate users, IAM allows to configure:
 
-For example, see the following fragment that requires authentication with the
-CERN SSO and defines how information from identity tokens issued by CERN SSO is
+- Whether users are required to authenticate through an external IdP and optionally
+  which ones
+- Which information must be retrieved from the IdP to fill the account creation form
+
+This is done by creating a YAML file in `/indigo-iam/config`, for example
+`/indigo-iam/config/application-registration.yaml`. When deploying IAM with a container,
+a volume providing this file must be mapped into the container.
+
+The contents in this file must be under the following hierarchy:
+
+```yaml
+
+iam:
+  registration:
+```
+
+
+### Requiring external authentication
+
+To require that users must authenticate through an external IdP, you need to define the
+parameter `require-external-authentication`. You can also specify the type of external
+IdP required (`oidc` or `saml`) and require one specific issuer.
+
+The following fragment requires authentication with the
+(OIDC-based) CERN SSO.
+
+and defines how information from identity tokens issued by CERN SSO is
 mapped to IAM membership information
 
 ```yaml
@@ -27,20 +49,41 @@ iam:
     require-external-authentication: true
     oidc-issuer: https://auth.cern.ch/auth/realms/cern
     authentication-type: oidc
+```
+
+### Filling information from IdP
+
+The first time a user authenticates in IAM instance, the account creation form will be displayed. It is possible to request
+that some of the fields are filled with the value of an IdP attribute and to define that some of these fields are read-only,
+i.e. that the value provided by the IdP cannot be changed.
+
+To enable filling the creation form with values provided by the IdP, you need to create a YAML file in `/indigo-iam/config`, for example
+`/indigo-iam/config/application-registration.yaml`. The contents should be something similar to:
+
+
+```yaml
+iam:
+  registration:
     fields:
-      name:
-        read-only: true  # When false, allows user to override what comes from the authentication information
-        external-auth-attribute: given_name
-      surname:
-        read-only: true
-        external-auth-attribute: family_name
       email:
         read-only: false
         external-auth-attribute: email
+      name:
+        read-only: false
+        external-auth-attribute: given_name
+      surname:
+        read-only: false
+        external-auth-attribute: family_name
       username:
         read-only: false
         external-auth-attribute: preferred_username
 ```
+
+`read-only` can be set to `true` if you want to prevent that the  value provided supplied by the ID is modified by the user.
+**Note that if a field is defined as read-only and now value is provided
+by the IdP, it may result that the user cannot submit the account creation form if the field is required.**
+
+`external-auth-attribue` must be the name of the IdP attribute to use for the mentioned account creation form field.
 
 ## User editable fields
 
