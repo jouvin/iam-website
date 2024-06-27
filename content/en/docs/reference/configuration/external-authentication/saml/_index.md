@@ -258,7 +258,7 @@ instructions on how to override the default IAM configuration.
 
 ## Registration form: filling information from IdP
 
-See [registration configuration][external-idp-config]
+See [registration configuration][external-idp-config].
 
 [external-idp-config]: {{< ref "/docs/reference/configuration/registration/#registration-with-external-idp" >}}
 

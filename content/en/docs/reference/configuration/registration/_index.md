@@ -5,8 +5,8 @@ weight: 6
 ---
 
 IAM implements a basic registration service that requires the intervention
-of an IAM admin. In when, users apply for membership in an
-organization, and administrators are asked to validate membership requests.
+of an IAM admin. In fact, when users apply for membership in an
+organization, administrators are asked to validate membership requests.
 
 
 ## Registration with external IdP
@@ -34,12 +34,11 @@ iam:
 
 To require that users must authenticate through an external IdP, you need to set the
 parameter `require-external-authentication=true`. You can also specify the type of external
-IdP required (`oidc` or `saml`) and require one specific issuer.
+IdP (`oidc` or `saml`) and require one specific issuer.
 
-The following fragment requires authentication with the
-(OIDC-based) CERN SSO.
-
-and defines how information from identity tokens issued by CERN SSO is
+The following fragment is an example of authentication with the
+(OIDC-based) CERN SSO required before being redirected to the registration page.
+It also defines how information from identity tokens issued by CERN SSO is
 mapped to IAM membership information
 
 ```yaml
@@ -53,7 +52,7 @@ iam:
 
 ### Filling information from IdP
 
-The first time a user authenticates in IAM instance, the account creation form will be displayed. It is possible to request
+The first time a user authenticates in an IAM instance, the account creation form will be displayed. It is possible to request
 that some of the fields are filled with the value of an IdP attribute and to define that some of these fields are read-only,
 i.e. that the value provided by the IdP cannot be changed.
 
