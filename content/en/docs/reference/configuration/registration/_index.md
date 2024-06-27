@@ -4,10 +4,10 @@ linkTitle: "Registration & Enrollment"
 weight: 6
 ---
 
+IAM implements a basic registration service that requires the intervention
+of an IAM admin. In when, users apply for membership in an
+organization, and administrators are asked to validate membership requests.
 
-IAM implements a basic registration service that implements an
-administrator-vetted registration flow, where users apply for membership in an
-organization and administrators are asked to validate membership requests.
 
 ## Registration with external IdP
 
@@ -32,8 +32,8 @@ iam:
 
 ### Requiring external authentication
 
-To require that users must authenticate through an external IdP, you need to define the
-parameter `require-external-authentication`. You can also specify the type of external
+To require that users must authenticate through an external IdP, you need to set the
+parameter `require-external-authentication=true`. You can also specify the type of external
 IdP required (`oidc` or `saml`) and require one specific issuer.
 
 The following fragment requires authentication with the
@@ -80,10 +80,12 @@ iam:
 ```
 
 `read-only` can be set to `true` if you want to prevent that the  value provided supplied by the ID is modified by the user.
-**Note that if a field is defined as read-only and now value is provided
-by the IdP, it may result that the user cannot submit the account creation form if the field is required.**
+**Note that if a field is defined as `read-only=true` and now value is not provided
+by the IdP, it may result that the user cannot submit the account creation form if the field,
+when it is required.**
 
-`external-auth-attribue` must be the name of the IdP attribute to use for the mentioned account creation form field.
+`external-auth-attribue` must be the name of the IdP attribute, or token claim (when provided by SAML IdPs,
+or OIDC Providers, respectively) to use for the mentioned account creation form field.
 
 ## User editable fields
 
@@ -109,5 +111,26 @@ To prevent modifications to any of the fields remove the field name from
 External configuration can be managed by placing directives as shown above in a
 [custom configuration
 file][custom-config-file]
+
+## Automatic enrollment trough SAML IdPs
+
+In case of registration trough an external SAML Identity Provider, IAM offers
+a flexible user enrollment flow, also without IAM admin intervention. The default IAM
+behavior is that the user enrollment requires an administrator approval step.
+
+In order to enable an automatic enrollment flow trough an external IdP, one
+should set the following properties, under the `saml` hierarchy:
+
+```yaml
+saml:
+  jit-account-provisioning:
+    enabled: true
+    # this will consider as trusted all the IdPs declared in your
+    # application-saml.yml file
+    trusted-idps: all
+```
+
+In order to directly declare the list of trusted SAML IdPs, a comma separated list of
+entity IDs have to be set, e.g. `saml.jit-account-provisioning.trusted-idps=idp1,idp2,idp3`.
 
 [custom-config-file]: {{< ref "/docs/reference/configuration/#overriding-default-configuration-templates" >}}
