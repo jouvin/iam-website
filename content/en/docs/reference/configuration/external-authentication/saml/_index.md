@@ -255,3 +255,10 @@ instructions on how to override the default IAM configuration.
 [edugain]: https://edugain.org/
 [application-saml]: https://raw.githubusercontent.com/indigo-iam/iam/{{< param version >}}/iam-login-service/src/main/resources/application-saml.yml
 
+
+## Registration form: filling information from IdP
+
+See [registration configuration][external-idp-config]
+
+[external-idp-config]: {{< ref "/docs/reference/configuration/registration/#registration-with-external-idp" >}}
+
