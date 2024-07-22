@@ -388,6 +388,34 @@ IAM_NOTIFICATION_CLEANUP_AGE=30
 IAM_ACCOUNT_LINKING_DISABLE=false 
 ```
 
+## Client registration
+
+Those variables allow to configure how to register a new client and
+the related default settings.
+
+For more information see the [Client registration
+section]({{< ref "/docs/reference/configuration/client-registration" >}}).
+
+```bash
+# Specifies who can register a client. Default is anyone, so also not registered users.
+# Other possible values are: REGISTERED_USERS and ADMINISTRATORS
+IAM_CLIENT_REGISTRATION_ALLOW_FOR=ANYONE
+# Set to false if you do not want to enable client registration (default is true)
+IAM_CLIENT_REGISTRATION_ENABLE=true
+# Set the default validity in seconds of an AT requested by any newly registered client.
+# Default is 1 hour, but it can be changed per client
+IAM_DEFAULT_ACCESS_TOKEN_VALIDITY_SECONDS=3600
+# Set the default validity in seconds of a device code requested by any newly registered client.
+# Default is 10 minutes, but it can be changed per client
+IAM_DEFAULT_DEVICE_CODE_VALIDITY_SECONDS=600
+# Set the default validity in seconds of an ID token requested by any newly registered client.
+# Default is 10 minutes, but it can be changed per client
+IAM_DEFAULT_ID_TOKEN_VALIDITY_SECONDS=600
+# Set the default validity in seconds of an RT requested by any newly registered client.
+# Default is 30 days, but it can be changed per client
+IAM_DEFAULT_REFRESH_TOKEN_VALIDITY_SECONDS=2592000
+```
+
 ## Client lifecycle
 
 ```bash

@@ -24,7 +24,6 @@ a volume providing this file must be mapped into the container.
 The contents in this file must be under the following hierarchy:
 
 ```yaml
-
 iam:
   registration:
 ```
@@ -42,7 +41,6 @@ It also defines how information from identity tokens issued by CERN SSO is
 mapped to IAM membership information
 
 ```yaml
-
 iam:
   registration:
     require-external-authentication: true
@@ -86,6 +84,29 @@ when it is required.**
 `external-auth-attribue` must be the name of the IdP attribute, or token claim (when provided by SAML IdPs,
 or OIDC Providers, respectively) to use for the mentioned account creation form field.
 
+
+## Automatic enrollment through SAML IdPs
+
+In case of registration through an external SAML Identity Provider, IAM offers
+a flexible user enrollment flow, also without IAM admin intervention. The default IAM
+behavior is that the user enrollment requires an administrator approval step.
+
+In order to enable the automatic enrollment flow via an external IdP, one
+should set the following properties, under the `saml` hierarchy:
+
+```yaml
+saml:
+  jit-account-provisioning:
+    enabled: true
+    # this will consider as trusted all the IdPs declared in your
+    # application-saml.yml file
+    trusted-idps: all
+```
+
+In order to directly declare the list of trusted SAML IdPs, a comma separated list of
+entity IDs have to be set, e.g. `saml.jit-account-provisioning.trusted-idps=idp1,idp2,idp3`.
+
+
 ## User editable fields
 
 Starting with version 1.6.0, IAM allows to limit which fields of the user profile are editable by users.
@@ -94,7 +115,6 @@ The default, backward-compatible settings that allow users to edit all their
 profile fields are defined as follows:
 
 ```yaml
-
 iam:
   user-profile:
     editable-fields:
@@ -111,25 +131,26 @@ External configuration can be managed by placing directives as shown above in a
 [custom configuration
 file][custom-config-file]
 
-## Automatic enrollment trough SAML IdPs
 
-In case of registration trough an external SAML Identity Provider, IAM offers
-a flexible user enrollment flow, also without IAM admin intervention. The default IAM
-behavior is that the user enrollment requires an administrator approval step.
+## Automatically set the nickname as attribute
 
-In order to enable an automatic enrollment flow trough an external IdP, one
-should set the following properties, under the `saml` hierarchy:
+Since IAM v1.9.0, during a registration request the username can be automatically added as an attribute named _nickname_. This process happens both for login with external provider, or when one directly clicks on the
+_Apply for an account_ button.
+The _nickname_ value will be the same as the username set during the registration request.
+
+This behavior does not appear by default. To enable it, add to your config file
 
 ```yaml
-saml:
-  jit-account-provisioning:
-    enabled: true
-    # this will consider as trusted all the IdPs declared in your
-    # application-saml.yml file
-    trusted-idps: all
+iam:
+  registration:
+    add-nickname-as-attribute: true
 ```
 
-In order to directly declare the list of trusted SAML IdPs, a comma separated list of
-entity IDs have to be set, e.g. `saml.jit-account-provisioning.trusted-idps=idp1,idp2,idp3`.
+or set the environment variable `IAM_ADD_NICKNAME_AS_ATTRIBUTE=true`.
+
+Once the new IAM user has been created, the _Attributes_ view from the dashboard looks like the following
+
+![Attributes view](./nickname-attribute.png)
+
 
 [custom-config-file]: {{< ref "/docs/reference/configuration/#overriding-default-configuration-templates" >}}

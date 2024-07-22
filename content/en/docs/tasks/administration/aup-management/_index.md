@@ -82,3 +82,55 @@ at registration time:
 or at the first login after the AUP creation:
 
 <img src="../images/aup4.png" width="500">
+
+## Request AUP signature
+
+Administrator can request user to sign AUP.
+
+Administrator privileges are required.
+
+Log into the service using admin credentials and click on the _Users_ link on the left navigation bar:
+
+![dashboard](../images/request-aup-signature-1.png)
+
+From the _Users_ link, select _Any user_ you want to request AUP signature, for example _Test-200 User_:
+
+![user](../images/request-aup-signature-2.png)
+
+To request AUP signature click on _Request AUP signature_ button on _User details_ section on the left of the page:
+
+![request AUP signature button](../images/request-aup-signature-3.png)
+
+To confirm your choice click on _Request AUP signature_ button on the modal window:
+
+![request AUP signature modal](../images/request-aup-signature-4.png)
+
+On success you will get a confirmation message:
+
+![request AUP signature confirmation](../images/request-aup-signature-5.png)
+
+After this operation, if the user logs in, they must sign the AUP again before accessing the service.
+
+## Sign AUP on behalf of the user
+
+Administrator can sign AUP on behalf of the user.
+
+Log into the service using admin credentials and click on the _Users_ link on the left navigation bar:
+
+![dashboard](../images/request-aup-signature-1.png)
+
+From the _Users_ link, select _Any user_ you want to sign AUP on behalf, for example _Test-200 User_:
+
+![user](../images/request-aup-signature-2.png)
+
+To sign AUP on behalf of the user click on _Sign AUP on behalf of this user_ button on _User details_ section on the left of the page:
+
+![sign AUP on behalf button](../images/sign-aup-on-behalf-1.png)
+
+To confirm your choice click on _Sign AUP_ button on the modal window:
+
+![sign AUP on behalf modal](../images/sign-aup-on-behalf-2.png)
+
+On success you will get a confirmation message:
+
+![sign AUP on behalf confirmation](../images/sign-aup-on-behalf-3.png)
