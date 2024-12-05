@@ -27,7 +27,7 @@ In order to deploy a VOMS attribute authority, you can use the following docker
 images:
 
 - `cnafsd/nginx-httpg-voms`, for the NGINX VOMS module (which replaces [OpenResty VOMS](https://github.com/indigo-iam/openresty-voms))
-- `indigoiam/voms-aa:{{< param voms_aa_version >}}`, for the VOMS AA service
+- `indigoiam/voms-aa-bp:{{< param voms_aa_version >}}`, for the VOMS AA service
 
 Deployment from packages is not currently supported for the VOMS attribute
 authority.
