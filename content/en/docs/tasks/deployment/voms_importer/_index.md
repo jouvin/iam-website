@@ -19,23 +19,12 @@ The VOMS information that is synchronized includes:
   * Generic attributes
 
 The script needs admininistrative privileges on both VOMS and IAM, represented
-respectively by a VOMS proxy and an IAM access token.
+respectively by a VOMS proxy and an IAM access token. As it synchronizes INDIGO
+IAM information with VOMS information (rather than overwriting it), it can be run
+multiple times to fix problems in previous runs.
 
-A typical run is as follows:
-
-```shell
-export REQUESTS_CA_BUNDLE=/etc/grid-security/certificates
-export BEARER_TOKEN=...
-export X509_USER_PROXY=...
-python vomsimporter.py --vo test.vo --voms-host vgrid02.cnaf.infn.it --iam-host iam-dev.cloud.cnaf.infn.it
-```
-
-The script can be run with many different options. `python vomsimporter.py
---help` gives all the details.
-
-The script is currently deployed only for LHC VOs and includes some CERN
-specificities, but it is general enough that can be easily adapted to other
-situations.
+The documentation on how to run the `vomsimporter.py` script is available at
+https://github.com/indigo-iam/voms-importer.
 
 ## Migration of groups and roles
 
@@ -63,10 +52,15 @@ or role in VOMS; those are not considered by the importer script.
 
 ## Migration of users
 
-Only **active** VOMS users are migrated. **A user suspended in VOMS, may not be
-also suspended in IAM.** Since IAM at CERN is also integrated with the CERN
+Only **active** VOMS users are imported: nothing is done on the INDIGO IAM side
+for a user suspended in VOMS, except if you add option ` --synchronize-activation-status`
+to force the synchronization of activation state in INDIGO IAM using the activation
+state in VOMS. **Without this option, a user suspended in VOMS may still be
+active in IAM if the user was imported (and active) before it was suspended in VOMS.** 
+
+*Note about CERN instances: since INDIGO IAM at CERN is also integrated with the CERN
 Human Resource (HR) database, the HR check will ensure that users are
-suspended/removed from the VO when experiment membership is no longer valid.
+suspended/removed from the VO when experiment membership is no longer valid.*
 
 When creating a IAM account for a newly-discovered VOMS user, the importer
 script generates a username of the form `voms.<voms-id>`. There is an option to
