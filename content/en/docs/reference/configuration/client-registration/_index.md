@@ -17,9 +17,8 @@ variables, please check the [Configuration][conf] section.
 In order to totally disable the client registration, set
 
 ```yaml
-iam:
-  client-registration:
-    enable: false 
+client-registration:
+  enable: false 
 ```
 
 The client registration is enabled by default in IAM.
@@ -33,9 +32,8 @@ to limit to all, IAM users or administrators only the
 client registration
 
 ```yaml
-iam:
-  client-registration:
-    allow-for: <ANYONE|REGISTERED_USERS|ADMINISTRATORS> 
+client-registration:
+  allow-for: <ANYONE|REGISTERED_USERS|ADMINISTRATORS> 
 ```
 
 The client registration is enabled for anyone by default.
@@ -48,17 +46,16 @@ access token, device code, ID token and refresh token lifetimes
 can be set trough the following properties
 
 ```yaml
-iam:
-  client-registration:
-    client-defaults:
-      # IAM default is 1 hour
-      default-access-token-validity-seconds: 3600
-      # IAM default is 10 minutes
-      default-device-code-validity-seconds: 600
-      # IAM default is 10 minutes
-      default-id-token-validity-seconds: 600
-      # IAM default is 30 days
-      default-refresh-token-validity-seconds: 2592000
+client-registration:
+  client-defaults:
+    # IAM default is 1 hour
+    default-access-token-validity-seconds: 3600
+    # IAM default is 10 minutes
+    default-device-code-validity-seconds: 600
+    # IAM default is 10 minutes
+    default-id-token-validity-seconds: 600
+    # IAM default is 30 days
+    default-refresh-token-validity-seconds: 2592000
 ```
 
 The above values can be changed per client trough web interface
