@@ -6,10 +6,11 @@ Starting from v1.10.0 version, a statistical endpoint showing the number of user
 
 The endpoint does not require authentication and is available at `/stats`. An example:
 
-```json
+```bash
 $ curl http://localhost:8080/stats --silent | jq
 {
-  "numberOfUsers": 255
+  "numberOfUsers": 255,
+  "activeUsers": 254
 }
 ```
 
