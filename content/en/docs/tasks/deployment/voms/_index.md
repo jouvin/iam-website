@@ -72,7 +72,7 @@ following variables:
 - `VOMS_AA_PORT` VOMS AA port
 - `VOMS_AA_VO`: VO served by the VOMS AA service (lower case).
 
-A top level group equal to `VOMS_AA_VO` must be defined in IAM. The attributes appearing in the VOMS proxy include all the sub-groups of the parent group equal to the VO name. Top level groups different from the VO name may be still used for group-based authorization with JWTs, but will not appear in the proxy.
+A top level group equal to `VOMS_AA_VO` must be defined in IAM. The attributes appearing in the VOMS proxy include all the sub-groups of the parent group equal to the VO name. Top level groups different from the VO name may still be used for group-based authorization with JWTs, but will not appear in the proxy.
 
 You also need to create a VOMS AA YAML configuration file with the content below (its content should
 be generic as it relies on standard environment variables used to configure the login service) and map it
