@@ -52,22 +52,24 @@ scenarios not served by the default templates.
 ## Basic service configuration 
 
 ```bash
-# The IAM service will list for requests on this host.
-IAM_HOST=localhost
+# The IAM service will listen for requests on this host.
+# Should be handled by the Nginx frontend in front of INDIGO IAM
+IAM_HOST=iam.instance.fqdn
 
 # The IAM service webapp will bind on this port.
 IAM_PORT=8080
 
 # The IAM web application base URL
-IAM_BASE_URL=http://${IAM_HOST}:8080
+IAM_BASE_URL=https://${IAM_HOST}
 
 # The OpenID Connect issuer configured for this IAM instance.
 # This must be equal to IAM_BASE_URL
-IAM_ISSUER=http://${IAM_HOST}:8080
+IAM_ISSUER=https://${IAM_HOST}
 
 # The path to the JSON keystore that holds the keys IAM will use to sign and
-# verify token signatures
-IAM_KEY_STORE_LOCATION=
+# verify token signatures. Must match the mount point for this file in the container
+# configuration.
+IAM_KEY_STORE_LOCATION=file:/keystore.jks
 
 # IAM will look for trust anchors in this directory.  These trust anchors are
 # needed for TLS operations where the IAM acts as a client (i.e., to
@@ -79,7 +81,7 @@ IAM_X509_TRUST_ANCHORS_REFRESH=14400
 
 # Use forwarded headers from reverse proxy. Set this to true when deploying the
 # service behind a reverse proxy.
-IAM_USE_FORWARDED_HEADERS=false
+IAM_FORWARD_HEADERS_STRATEGY=native
 
 ## Tomcat embedded container settings
 
